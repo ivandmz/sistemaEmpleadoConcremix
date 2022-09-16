@@ -2,7 +2,10 @@ from django.contrib import admin
 from gestionEmpleados.models import Empleados,Vehiculos,Recintos
 
 class EmpleadosAdmin(admin.ModelAdmin):
-    list_display = ("apellido_nombre","foto","fecha_nac","dni","telefono","correo","direccion","puesto","vehiculo","recinto",)
+    if Empleados.activo == False:
+        list_display = ("apellido_nombre","foto","fecha_nac","dni","telefono","correo","direccion","fecha_ingreso","puesto","vehiculo","recinto","activo","fecha_baja",)
+    else:
+        list_display = ("apellido_nombre","foto","fecha_nac","dni","telefono","correo","direccion","fecha_ingreso","puesto","vehiculo","recinto","activo",)
     search_fields = ("apellido_nombre","dni","puesto","vehiculo","recinto",)
     list_filter = ("puesto","vehiculo","recinto",)
 

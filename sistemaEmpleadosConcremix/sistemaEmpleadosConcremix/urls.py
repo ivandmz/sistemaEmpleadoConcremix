@@ -15,9 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from gestionEmpleados import views
 from sistemaEmpleadosConcremix.views import index
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index),
+    path('planilla_empleados/',views.planilla_empleados),
+    path('busqueda_empleados/',views.busqueda_empleados),
+    path('buscar_empleado/',views.buscar_empleado),
 ]

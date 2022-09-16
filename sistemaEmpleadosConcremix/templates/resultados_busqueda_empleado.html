@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% block title %} Resultado busqueda {% endblock %}
+{% block content %}
+<div class="card">
+    <div class="card-body">
+        <p class="card-text">Estás buscando: {{query}}</p>
+    </div>
+    {% if empleados %}
+    <div class="card-body">
+        <p class="card-text"> coincidencias encontradas: {{empleados|length}} empleados</p>
+    </div>
+
+    <table class="table table-dark">
+        <thead class="thead-dark">
+            <tr>
+                <th>Activo</th>
+                <th>Foto</th>
+                <th>Nombre</th>
+                <th>Fecha nacimiento</th>
+                <th>DNI</th>
+                <th>Telefono</th>
+                <th>Correo</th>
+                <th>Direccion</th>
+                <th>Fecha Ingreso</th>
+                <th>Fecha Baja</th>
+                <th>Puesto</th>
+                <th>Vehiculo</th>
+                <th>Sector</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for empleado in empleados %}
+            <tr>
+                {% if empleado.activo %}
+                <td style="color: green;">&bullet;</td>
+                {% elif not empleado.activo %}
+                <td style="color: red;">&bullet;</td>
+                {% endif %}
+
+                <td><img width="100" src="" alt="foto perfil {{empleado.apellido_nombre}}"></td>
+                <td>{{empleado.apellido_nombre}}</td>
+                <td>{{empleado.fecha_nac}}</td>
+                <td>{{empleado.dni}}</td>
+                <td>{{empleado.telefono}}</td>
+                <td>{{empleado.correo}}</td>
+                <td>{{empleado.direccion}}</td>
+                <td>{{empleado.fecha_ingreso}}</td>
+                <td>{{empleado.fecha_baja}}</td>
+                <td>{{empleado.puesto}}</td>
+                <td>{{empleado.vehiculo}}</td>
+                <td>{{empleado.recinto}}</td>
+                <td>
+                    <a class="btn btn-warning" href="/modificar/{{empleado.id}}">Editar</a> <!-- Falta hacer link-->
+                    <a id="btnBorrar" class="btn btn-danger" href="/delete/{{empleado.id}}">Dar de baja</a>
+                    <!-- Falta hacer link-->
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <div class="card-body">
+        <p class="card-text"> No hay empleados para mostrar</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
