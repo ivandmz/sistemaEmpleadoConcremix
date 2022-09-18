@@ -4,6 +4,9 @@ from gestionEmpleados.models import Empleados
 import datetime
 
 
+def crear_empleado(request): # aca mirar como hice en proyecta cac de flask para tener get y post juntas...
+    return render(request, "crear_empleado.html")
+        
 def modificar_empleado(request): # aca mirar como hice en proyecta cac de flask para tener get y post juntas...
     if request.GET['emp']:
         pass

@@ -24,4 +24,5 @@ urlpatterns = [
     path('planilla_empleados/',views.planilla_empleados),
     path('busqueda_empleados/',views.busqueda_empleados),
     path('buscar_empleado/',views.buscar_empleado),
+    path('crear_empleado/',views.crear_empleado),
 ]
