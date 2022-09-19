@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block title %} Crear empleado {% endblock %}
+{% block content %}
+<div class="card">
+    <div class="card-body table-dark">
+        <form class="table table-dark" action="/crear_empleado/" method="POST">
+            <label for="nombre">Nombre completo: </label>
+            <input type="text" name="nombre" id="nombre" placeholder="Apellido, Nombre">
+
+            <label for="foto">foto: </label>
+            <input type="file" name="foto" id="foto">
+
+            <label for="fecha_nac">Fecha nacimiento: </label>
+            <input type="datetime" name="fecha_nac" id="fecha_nac" placeholder="aaaa-mm-dd">
+
+            <label for="dni">DNI: </label>
+            <input type="text" name="dni" id="dni" placeholder="DNI sin puntos ni comas">
+
+            <label for="telefono">Telefono: </label>
+            <input type="text" name="telefono" id="telefono">
+
+            <label for="correo">email: </label>
+            <input type="email" name="correo" id="correo">
+
+            <label for="direccion">Dirección: </label>
+            <input type="text" name="direccion" id="direccion">
+
+            <label for="fecha_ing">Fecha ingreo: </label>
+            <input type="datetime" name="fecha_ing" id="fecha_ing">
+
+            <label for="fecha_baja">Fecha baja: </label>
+            <input type="datetime" name="fecha_baja" id="fecha_baja">
+
+            <label for="puesto">Puesto: </label>
+            <input type="text" name="puesto" id="puesto">
+
+            <label for="vehiculo">Vehículo: </label>
+            <input type="text" name="vehiculo" id="vehiculo">
+
+            <label for="recinto">Recinto: </label>
+            <input type="recinto" name="recinto" id="recinto">
+
+            <input type="hidden" name="activo" value=True>
+
+            <input class="btn btn-warning" type="submit" value="Ingresar empleado">
+        </form>
+    </div>
+</div>
+{% endblock %}
