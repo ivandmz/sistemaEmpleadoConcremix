@@ -1,45 +1,45 @@
-{% extends 'base.html' %}
+{% extends 'gestionEmpleados/empleados.html' %}
 {% block title %} Crear empleado {% endblock %}
 {% block content %}
 <div class="card">
     <div class="card-body table-dark">
         <form class="table table-dark" action="/crear_empleado/" method="POST">
-            <label for="nombre">Nombre completo: </label>
+            <label for="nombre" style="width: 150px;">Nombre completo: </label>
             <input type="text" name="nombre" id="nombre" placeholder="Apellido, Nombre">
-
+            <br>
             <label for="foto">foto: </label>
             <input type="file" name="foto" id="foto">
-
+            <br>
             <label for="fecha_nac">Fecha nacimiento: </label>
             <input type="datetime" name="fecha_nac" id="fecha_nac" placeholder="aaaa-mm-dd">
-
+            <br>
             <label for="dni">DNI: </label>
             <input type="text" name="dni" id="dni" placeholder="DNI sin puntos ni comas">
-
+            <br>
             <label for="telefono">Telefono: </label>
             <input type="text" name="telefono" id="telefono">
-
+            <br>
             <label for="correo">email: </label>
             <input type="email" name="correo" id="correo">
-
+            <br>
             <label for="direccion">Dirección: </label>
             <input type="text" name="direccion" id="direccion">
-
+            <br>
             <label for="fecha_ing">Fecha ingreo: </label>
             <input type="datetime" name="fecha_ing" id="fecha_ing">
-
+            <br>
             <label for="fecha_baja">Fecha baja: </label>
             <input type="datetime" name="fecha_baja" id="fecha_baja">
-
+            <br>
             <label for="puesto">Puesto: </label>
             <input type="text" name="puesto" id="puesto">
-
+            <br>
             <label for="vehiculo">Vehículo: </label>
             <input type="text" name="vehiculo" id="vehiculo">
-
+            <br>
             <label for="recinto">Recinto: </label>
             <input type="recinto" name="recinto" id="recinto">
-
+            <br>
             <input type="hidden" name="activo" value=True>
 
             <input class="btn btn-warning" type="submit" value="Ingresar empleado">

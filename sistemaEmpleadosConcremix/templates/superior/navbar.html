@@ -1,15 +1,15 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     {% load static %}
-    <a class="navbar-brand" href=""><img width="150px" src="{% static 'gestionEmpleados\img\concremix_iso.png' %}" alt="logo concremix"></a>
+    <a class="navbar-brand" href="{% url 'Home' %}"><img width="150px" src="{% static 'sistemaEmpleadosConcremix\img\concremix_iso.png' %}" alt="logo concremix"></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
         aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-            <a class="nav-item nav-link {% if 'despacho' in request.path %}active{% endif %}" href="#">Despacho<span class="sr-only">(current)</span></a>  <!-- href=" url 'Despacho' %}" ponerlo bien porque django lo lee aun en los commentarios jaa-->
-            <a class="nav-item nav-link {% if 'clientes' in request.path %}active{% endif %}" href="#">Clientes<span class="sr-only">(current)</span></a>  <!-- href=" url 'Clientes' %}"-->
-            <a class="nav-item nav-link {% if 'proveedores' in request.path %}active{% endif %}" href="#">Proveedores<span class="sr-only">(current)</span></a>  <!-- href=" url 'Proveedores' %}"-->
+            <a class="nav-item nav-link {% if 'despacho' in request.path %}active{% endif %}" href="#">Despacho</a>  <!-- href=" url 'Despacho' %}" ponerlo bien porque django lo lee aun en los commentarios jaa-->
+            <a class="nav-item nav-link {% if 'clientes' in request.path %}active{% endif %}" href="#">Clientes</a>  <!-- href=" url 'Clientes' %}"-->
+            <a class="nav-item nav-link {% if 'proveedores' in request.path %}active{% endif %}" href="#">Proveedores</a>  <!-- href=" url 'Proveedores' %}"-->
             <a class="nav-item nav-link {% if 'empleados' in request.path %}active{% endif %}" href="{% url 'Empleados' %}">Empleados</a>
             <a class="nav-item nav-link" href="#">Otra...</a>
         </div>

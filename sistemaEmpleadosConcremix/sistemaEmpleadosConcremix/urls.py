@@ -19,7 +19,7 @@ from sistemaEmpleadosConcremix.views import index
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', index),
+    path('', index,name='Home'),
     # path('despacho/',include('gestionDespacho.urls')),  #todavia no está creado
     # path('clientes/',include('gestionClientes.urls')),
     # path('proveedores/',include('gestionPorveedores.urls')),
