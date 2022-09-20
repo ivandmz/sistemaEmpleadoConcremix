@@ -3,7 +3,7 @@
 {% block content %}
 <div class="card">
     <div class="card-body table-dark">
-        <form class="table table-dark" action="/crear_empleado/" method="POST">
+        <form class="table table-dark" action="crear_empleado" method="POST">{% csrf_token %}
             <label for="nombre" style="width: 150px;">Nombre completo: </label>
             <input type="text" name="nombre" id="nombre" placeholder="Apellido, Nombre">
             <br>

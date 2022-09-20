@@ -7,10 +7,14 @@ import datetime
 
 def crear_empleado(request): # aca mirar como hice en proyecta cac de flask para tener get y post juntas...
     if request.method == 'POST':
-        form_crear_empleado = FormuCrearEmpleado(request.POST)
+        form_crear_empleado = Empleados.objects(request.POST) # o uso Empleados de models.py
         if form_crear_empleado.is_valid():
-            form_crear_empleado = form_crear_empleado.cleaned_data # devuelve (o transforma?) en dict...
-            # aca debo operar con variable y poner cada dato del post
+            # form_crear_empleado= form_crear_empleado.cleaned_data # devuelve (o transforma?) en dict...
+            empleado = Empleados.objects.create(form_crear_empleado.cleaned_data)
+            # empleado.save()
+        else:
+            raise ValueError("no es valido")
+        return redirect('Empleados')
     else:
         return render(request, "gestionEmpleados/crear_empleado.html") # GET. me sirve el form para crear/ingresar empleado
         
