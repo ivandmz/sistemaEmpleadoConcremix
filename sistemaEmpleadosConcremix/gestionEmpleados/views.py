@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from gestionEmpleados.models import Empleados
 from gestionEmpleados.forms import FormuCrearEmpleado
@@ -36,12 +36,12 @@ def alta_baja(request,id):
         empleado.fecha_ingreso = datetime.datetime.now()
         empleado.activo = True
     empleado.save()
-    return planilla_empleados(request)
+    return redirect('Empleados')
 
 def planilla_empleados(request):
     fecha_actual=datetime.datetime.now().strftime("%D - %H:%M:%S")
     anio=datetime.datetime.now().strftime("%Y")
-    empleados=Empleados.objects.all()
+    empleados=Empleados.objects.all().order_by('apellido_nombre')
     return render(request,"gestionEmpleados/planilla_empleados.html", {"fecha":fecha_actual,"agno":anio,"empleados":empleados})
 
 def busqueda_empleados(request):
