@@ -14,11 +14,29 @@ def crear_empleado(request): # aca mirar como hice en proyecta cac de flask para
     else:
         return render(request, "gestionEmpleados/crear_empleado.html") # GET. me sirve el form para crear/ingresar empleado
         
-def modificar_empleado(request): # aca mirar como hice en proyecta cac de flask para tener get y post juntas...
-    if request.GET['emp']:
-        pass
-    elif request.POST['emp']:
-        pass
+def editar_empleado(request,id): # aca mirar como hice en proyecta cac de flask para tener get y post juntas...
+    if request.method == 'POST':
+        form_edit_empleado = FormuCrearEmpleado(request.POST)
+        if form_edit_empleado.is_valid():
+            form_edit_empleado = form_edit_empleado.cleaned_data
+            # aca falta operar y guardar todo en DB
+    else:
+        id_empleado= id
+        empleado = Empleados.objects.filter(id=id_empleado)
+        return render(request, "gestionEmpleados/editar_empleado.html", {"empleado":empleado})
+
+def alta_baja(request,id):
+    id_empleado = id
+    empleado = Empleados.objects.get(id=id_empleado)
+    if empleado.activo == True:
+        empleado.fecha_baja = datetime.datetime.now()
+        empleado.activo = False
+    elif empleado.activo == False:
+        empleado.fecha_baja = None
+        empleado.fecha_ingreso = datetime.datetime.now()
+        empleado.activo = True
+    empleado.save()
+    return planilla_empleados(request)
 
 def planilla_empleados(request):
     fecha_actual=datetime.datetime.now().strftime("%D - %H:%M:%S")
