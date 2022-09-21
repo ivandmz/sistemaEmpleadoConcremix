@@ -13,4 +13,4 @@ class FormuCrearEmpleado(forms.Form):
     puesto=forms.CharField()
     vehiculo=forms.CharField(required=False)
     recinto=forms.CharField(required=False)
-    activo=forms.BooleanField()
+    activo=forms.BooleanField(required=False)

@@ -14,11 +14,9 @@ def crear_empleado(request):
             raise ValueError("formulario no valido")
         return redirect('Empleados')
     else:
-        emp = Empleados()
-        return render(request, "gestionEmpleados/crear_empleado.html", {"emp":emp}) # GET. me sirve el form para crear/ingresar empleado
-        # return render(request, "gestionEmpleados/crear_empleado.html") # GET. me sirve el form para crear/ingresar empleado
+        return render(request, "gestionEmpleados/crear_empleado.html") # GET. me sirve el form para crear/ingresar empleado
         
-def editar_empleado(request,id): # aca mirar como hice en proyecta cac de flask para tener get y post juntas...
+def editar_empleado(request,id):
     id_empleado= id
     empleado = Empleados.objects.filter(id=id_empleado)
     if request.method == 'POST':
