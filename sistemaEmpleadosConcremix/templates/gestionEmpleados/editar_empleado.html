@@ -1,18 +1,20 @@
 {% extends 'gestionEmpleados/empleados.html' %}
 {% block title %} Crear empleado {% endblock %}
 {% block content %}
-{% for empleado in empleado %}    
+{% for empleado in empleado %}
 <div class="card">
     <div class="card-body table-dark">
-        <form class="table table-dark" action="/editar_empleado/" method="POST">
-            <label for="nombre" style="width: 150px;">Nombre completo: </label>
-            <input type="text" name="nombre" id="nombre" value="{{empleado.apellido_nombre}}">
+        <form class="table table-dark" action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <label for="apellido_nombre">Nombre completo: </label>
+            <input type="text" name="apellido_nombre" id="apellido_nombre" value="{{empleado.apellido_nombre}}">
             <br>
             <label for="foto">foto: </label>
             <input type="file" name="foto" id="foto" value="{{empleado.foto}}">
             <br>
             <label for="fecha_nac">Fecha nacimiento: </label>
-            <input type="datetime" name="fecha_nac" id="fecha_nac" value="{{empleado.fecha_nac}}">
+            <input type="datetime" name="fecha_nac" id="fecha_nac" value="{{empleado.fecha_nac|date:'Y-m-d'}}">
             <br>
             <label for="dni">DNI: </label>
             <input type="text" name="dni" id="dni" value="{{empleado.dni}}">
@@ -26,11 +28,11 @@
             <label for="direccion">Dirección: </label>
             <input type="text" name="direccion" id="direccion" value="{{empleado.direccion}}">
             <br>
-            <label for="fecha_ing">Fecha ingreo: </label>
-            <input type="datetime" name="fecha_ing" id="fecha_ing" value="{{empleado.fecha_ingreso}}">
+            <label for="fecha_ingreso">Fecha ingreso: </label>
+            <input type="datetime" name="fecha_ingreso" id="fecha_ingreso" value="{{empleado.fecha_ingreso|date:'Y-m-d'}}">
             <br>
             <label for="fecha_baja">Fecha baja: </label>
-            <input type="datetime" name="fecha_baja" id="fecha_baja" value="{{empleado.baja}}">
+            <input type="datetime" name="fecha_baja" id="fecha_baja" value="{{empleado.fecha_baja|date:'Y-m-d'}}">
             <br>
             <label for="puesto">Puesto: </label>
             <input type="text" name="puesto" id="puesto" value="{{empleado.puesto}}">
@@ -41,12 +43,11 @@
             <label for="recinto">Recinto: </label>
             <input type="recinto" name="recinto" id="recinto" value="{{empleado.recinto}}">
             <br>
-            <input type="hidden" name="activo" value=True>
+            <input type="hidden" name="activo" value="True">
 
             <input class="btn btn-warning" type="submit" value="Confirmar cambios">
         </form>
     </div>
 </div>
 {% endfor %}
-
 {% endblock %}

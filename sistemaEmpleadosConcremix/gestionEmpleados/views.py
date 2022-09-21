@@ -5,28 +5,31 @@ from gestionEmpleados.forms import FormuCrearEmpleado
 import datetime
 
 
-def crear_empleado(request): # aca mirar como hice en proyecta cac de flask para tener get y post juntas...
+def crear_empleado(request):
     if request.method == 'POST':
-        form_crear_empleado = Empleados.objects(request.POST) # o uso Empleados de models.py
-        if form_crear_empleado.is_valid():
-            # form_crear_empleado= form_crear_empleado.cleaned_data # devuelve (o transforma?) en dict...
-            empleado = Empleados.objects.create(form_crear_empleado.cleaned_data)
-            # empleado.save()
+        form_empleado = FormuCrearEmpleado(request.POST,request.FILES)
+        if form_empleado.is_valid():
+            empleado = Empleados.objects.create(**form_empleado.cleaned_data)
         else:
-            raise ValueError("no es valido")
+            raise ValueError("formulario no valido")
         return redirect('Empleados')
     else:
-        return render(request, "gestionEmpleados/crear_empleado.html") # GET. me sirve el form para crear/ingresar empleado
+        emp = Empleados()
+        return render(request, "gestionEmpleados/crear_empleado.html", {"emp":emp}) # GET. me sirve el form para crear/ingresar empleado
+        # return render(request, "gestionEmpleados/crear_empleado.html") # GET. me sirve el form para crear/ingresar empleado
         
 def editar_empleado(request,id): # aca mirar como hice en proyecta cac de flask para tener get y post juntas...
+    id_empleado= id
+    empleado = Empleados.objects.filter(id=id_empleado)
     if request.method == 'POST':
-        form_edit_empleado = FormuCrearEmpleado(request.POST)
-        if form_edit_empleado.is_valid():
-            form_edit_empleado = form_edit_empleado.cleaned_data
-            # aca falta operar y guardar todo en DB
+        form_empleado = FormuCrearEmpleado(request.POST,request.FILES)
+        if form_empleado.is_valid():
+            empleado.update(**form_empleado.cleaned_data)
+        else:
+            print(form_empleado.errors)
+            raise ValueError("formulario no valido")
+        return redirect('Empleados')
     else:
-        id_empleado= id
-        empleado = Empleados.objects.filter(id=id_empleado)
         return render(request, "gestionEmpleados/editar_empleado.html", {"empleado":empleado})
 
 def alta_baja(request,id):

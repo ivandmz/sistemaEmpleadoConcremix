@@ -3,15 +3,18 @@
 {% block content %}
 <div class="card">
     <div class="card-body table-dark">
-        <form class="table table-dark" action="crear_empleado" method="POST">{% csrf_token %}
-            <label for="nombre" style="width: 150px;">Nombre completo: </label>
-            <input type="text" name="nombre" id="nombre" placeholder="Apellido, Nombre">
+        <form class="table table-dark" action="crear_empleado" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="hidden" name="id">
+
+            <label for="apellido_nombre">Nombre completo: </label>
+            <input type="text" name="apellido_nombre" id="apellido_nombre" placeholder="Apellido, Nombre">
             <br>
             <label for="foto">foto: </label>
             <input type="file" name="foto" id="foto">
             <br>
             <label for="fecha_nac">Fecha nacimiento: </label>
-            <input type="datetime" name="fecha_nac" id="fecha_nac" placeholder="aaaa-mm-dd">
+            <input type="date" name="fecha_nac" id="fecha_nac" placeholder="aaaa-mm-dd">
             <br>
             <label for="dni">DNI: </label>
             <input type="text" name="dni" id="dni" placeholder="DNI sin puntos ni comas">
@@ -25,11 +28,11 @@
             <label for="direccion">Dirección: </label>
             <input type="text" name="direccion" id="direccion">
             <br>
-            <label for="fecha_ing">Fecha ingreo: </label>
-            <input type="datetime" name="fecha_ing" id="fecha_ing">
+            <label for="fecha_ingreso">Fecha ingreso: </label>
+            <input type="date" name="fecha_ingreso" id="fecha_ingreso">
             <br>
             <label for="fecha_baja">Fecha baja: </label>
-            <input type="datetime" name="fecha_baja" id="fecha_baja">
+            <input type="date" name="fecha_baja" id="fecha_baja">
             <br>
             <label for="puesto">Puesto: </label>
             <input type="text" name="puesto" id="puesto">
@@ -40,7 +43,7 @@
             <label for="recinto">Recinto: </label>
             <input type="recinto" name="recinto" id="recinto">
             <br>
-            <input type="hidden" name="activo" value=True>
+            <input type="hidden" name="activo" value="True">
 
             <input class="btn btn-warning" type="submit" value="Ingresar empleado">
         </form>

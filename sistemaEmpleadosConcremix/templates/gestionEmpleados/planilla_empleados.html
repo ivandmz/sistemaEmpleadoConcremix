@@ -30,13 +30,13 @@
 
             <td><img width="100" src="" alt="foto perfil {{empleado.apellido_nombre}}"></td>
             <td>{{empleado.apellido_nombre}}</td>
-            <td>{{empleado.fecha_nac}}</td>
+            <td>{{empleado.fecha_nac|date:'Y-m-d'}}</td>
             <td>{{empleado.dni}}</td>
             <td>{{empleado.telefono}}</td>
             <td>{{empleado.correo}}</td>
             <td>{{empleado.direccion}}</td>
-            <td>{{empleado.fecha_ingreso}}</td>
-            <td>{{empleado.fecha_baja}}</td>
+            <td>{{empleado.fecha_ingreso|date:'Y-m-d'}}</td>
+            <td>{{empleado.fecha_baja|date:'Y-m-d'}}</td>
             <td>{{empleado.puesto}}</td>
             <td>{{empleado.vehiculo}}</td>
             <td>{{empleado.recinto}}</td>
