@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path
-from gestionEmpleados import views
+from . import views
 
 urlpatterns=[
     path('',views.planilla_empleados,name="Empleados"),
