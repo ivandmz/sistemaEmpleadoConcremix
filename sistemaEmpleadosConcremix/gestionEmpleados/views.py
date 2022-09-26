@@ -6,6 +6,8 @@ import datetime
 
 
 def crear_empleado(request):
+    fecha_actual=datetime.datetime.now().strftime("%D - %H:%M:%S")
+    anio=datetime.datetime.now().strftime("%Y")
     if request.method == 'POST':
         form_empleado = FormuCrearEmpleado(request.POST,request.FILES)
         if form_empleado.is_valid():
@@ -14,7 +16,7 @@ def crear_empleado(request):
             raise ValueError("formulario no valido")
         return redirect('Empleados')
     else:
-        return render(request, "gestionEmpleados/crear_empleado.html") # GET. me sirve el form para crear/ingresar empleado
+        return render(request, "gestionEmpleados/crear_empleado.html", {"fecha":fecha_actual,"agno":anio}) # GET. me sirve el form para crear/ingresar empleado
         
 def editar_empleado(request,id):
     id_empleado= id
@@ -28,7 +30,9 @@ def editar_empleado(request,id):
             raise ValueError("formulario no valido")
         return redirect('Empleados')
     else:
-        return render(request, "gestionEmpleados/editar_empleado.html", {"empleado":empleado})
+        fecha_actual=datetime.datetime.now().strftime("%D - %H:%M:%S")
+        anio=datetime.datetime.now().strftime("%Y")
+        return render(request, "gestionEmpleados/editar_empleado.html", {"empleado":empleado,"fecha":fecha_actual,"agno":anio})
 
 def alta_baja(request,id):
     id_empleado = id
@@ -50,13 +54,17 @@ def planilla_empleados(request):
     return render(request,"gestionEmpleados/planilla_empleados.html", {"fecha":fecha_actual,"agno":anio,"empleados":empleados})
 
 def busqueda_empleados(request):
-    return render(request, "gestionEmpleados/busqueda_empleados.html")
+    fecha_actual=datetime.datetime.now().strftime("%D - %H:%M:%S")
+    anio=datetime.datetime.now().strftime("%Y")
+    return render(request, "gestionEmpleados/busqueda_empleados.html", {"fecha":fecha_actual,"agno":anio})
 
 def buscar_empleado(request):
+    fecha_actual=datetime.datetime.now().strftime("%D - %H:%M:%S")
+    anio=datetime.datetime.now().strftime("%Y")
     if request.GET["emp"]:
         nombre_empleado= request.GET["emp"]
-        empleados=Empleados.objects.filter(apellido_nombre__icontains=nombre_empleado)
-        return render(request,"gestionEmpleados/resultados_busqueda_empleado.html",{"empleados":empleados,"query":nombre_empleado})
+        empleados=Empleados.objects.filter(apellido_nombre__icontains=nombre_empleado).order_by('apellido_nombre')
+        return render(request,"gestionEmpleados/resultados_busqueda_empleado.html",{"empleados":empleados,"query":nombre_empleado,"fecha":fecha_actual,"agno":anio})
     else:
         mensaje= "No has introducido ningún dato."
         return HttpResponse(mensaje)
