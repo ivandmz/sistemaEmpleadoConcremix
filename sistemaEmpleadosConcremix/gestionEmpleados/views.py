@@ -1,10 +1,11 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
-from gestionEmpleados.models import Empleado
-from gestionEmpleados.forms import FormuCrearEmpleado
+from gestionEmpleados.models import Empleado, Vehiculo, Recinto
+from gestionEmpleados.forms import FormuCrearEmpleado, FormuCrearVehiculo
 import datetime
 
 
+# EMPLEADOS
 def crear_empleado(request):
     fecha_actual=datetime.datetime.now().strftime("%D - %H:%M:%S")
     anio=datetime.datetime.now().strftime("%Y")
@@ -68,3 +69,41 @@ def buscar_empleado(request):
     else:
         mensaje= "No has introducido ningún dato."
         return HttpResponse(mensaje)
+
+# VEHICULOS
+def planilla_vehiculos(request):
+    fecha_actual=datetime.datetime.now().strftime("%D - %H:%M:%S")
+    anio=datetime.datetime.now().strftime("%Y")
+    vehiculos = Vehiculo.objects.all().order_by('interno')
+    return render(request,"gestionEmpleados/planilla_vehiculos.html", {"fecha":fecha_actual,"agno":anio,"vehiculos":vehiculos})
+
+def busqueda_vehiculos(request):
+    fecha_actual=datetime.datetime.now().strftime("%D - %H:%M:%S")
+    anio=datetime.datetime.now().strftime("%Y")
+    if request.method == 'GET':
+        if request.GET["vehi"]:
+            nombre_vehiculo= request.GET["vehi"]
+            vehiculos=Vehiculo.objects.filter(nombre_vehiculo__icontains=nombre_vehiculo).order_by('interno')
+            return render(request,"gestionEmpleados/resultados_busqueda_vehiculo.html",{"vehiculos":vehiculos,"query":nombre_vehiculo,"fecha":fecha_actual,"agno":anio})
+        else:
+            mensaje= "No has introducido ningún dato."
+            return HttpResponse(mensaje)
+    else:
+        return render(request, "gestionEmpleados/busqueda_vehiculos.html", {"fecha":fecha_actual,"agno":anio})
+
+def crear_vehiculo(request):
+    fecha_actual=datetime.datetime.now().strftime("%D - %H:%M:%S")
+    anio=datetime.datetime.now().strftime("%Y")
+    form_vehiculo = FormuCrearVehiculo()
+    if request.method == 'POST':
+        form_vehiculo = FormuCrearVehiculo(request.POST) # como hago para no repetir esto?
+        if form_vehiculo.is_valid():
+            vehiculo = Vehiculo.objects.create(**form_vehiculo.cleaned_data) # hace falta la variable realmente???
+        else:
+            raise ValueError("formulario no valido")
+        return redirect('Vehiculos')
+    else:
+        return render(request, "gestionEmpleados/crear_vehiculo.html", {"fecha":fecha_actual,"agno":anio,"form_vehiculo":form_vehiculo}) # me sirve el form para crear/ingresar empleado
+        
+
+# RECINTOS

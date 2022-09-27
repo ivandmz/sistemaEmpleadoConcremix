@@ -1,0 +1,15 @@
+{% extends 'gestionEmpleados/vehiculos.html' %}
+{% block title %} Crear vehiculo {% endblock %}
+{% block content %}
+<div class="card">
+    <div class="card-body table-dark">
+        <form class="table table-dark" action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <table>
+                {{form_vehiculo.as_table}}
+            </table>
+            <input class="btn btn-warning" type="submit" value="Ingresar vehiculo">
+        </form>
+    </div>
+</div>
+{% endblock %}

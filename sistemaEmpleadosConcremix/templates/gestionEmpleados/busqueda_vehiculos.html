@@ -1,0 +1,9 @@
+{% extends 'gestionEmpleados/empleados.html' %}
+{% block title %} Buscar empleado {% endblock %}
+{% block content %}
+    <form class="table table-dark" action="" method="GET">
+        <label for="vehi">Ingrese nombre vehiculo: </label>
+        <input type="text" name="vehi" id="vehi">
+        <input class="btn btn-warning" type="submit" value="Buscar">
+    </form>
+{% endblock  %}
