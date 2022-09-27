@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
-from gestionEmpleados.models import Empleados
+from gestionEmpleados.models import Empleado
 from gestionEmpleados.forms import FormuCrearEmpleado
 import datetime
 
@@ -11,7 +11,7 @@ def crear_empleado(request):
     if request.method == 'POST':
         form_empleado = FormuCrearEmpleado(request.POST,request.FILES)
         if form_empleado.is_valid():
-            empleado = Empleados.objects.create(**form_empleado.cleaned_data)
+            empleado = Empleado.objects.create(**form_empleado.cleaned_data)
         else:
             raise ValueError("formulario no valido")
         return redirect('Empleados')
@@ -20,7 +20,7 @@ def crear_empleado(request):
         
 def editar_empleado(request,id):
     id_empleado= id
-    empleado = Empleados.objects.filter(id=id_empleado)
+    empleado = Empleado.objects.filter(id=id_empleado)
     if request.method == 'POST':
         form_empleado = FormuCrearEmpleado(request.POST,request.FILES)
         if form_empleado.is_valid():
@@ -36,7 +36,7 @@ def editar_empleado(request,id):
 
 def alta_baja(request,id):
     id_empleado = id
-    empleado = Empleados.objects.get(id=id_empleado)
+    empleado = Empleado.objects.get(id=id_empleado)
     if empleado.activo == True:
         empleado.fecha_baja = datetime.datetime.now()
         empleado.activo = False
@@ -50,7 +50,7 @@ def alta_baja(request,id):
 def planilla_empleados(request):
     fecha_actual=datetime.datetime.now().strftime("%D - %H:%M:%S")
     anio=datetime.datetime.now().strftime("%Y")
-    empleados=Empleados.objects.all().order_by('apellido_nombre')
+    empleados=Empleado.objects.all().order_by('apellido_nombre')
     return render(request,"gestionEmpleados/planilla_empleados.html", {"fecha":fecha_actual,"agno":anio,"empleados":empleados})
 
 def busqueda_empleados(request):
@@ -63,7 +63,7 @@ def buscar_empleado(request):
     anio=datetime.datetime.now().strftime("%Y")
     if request.GET["emp"]:
         nombre_empleado= request.GET["emp"]
-        empleados=Empleados.objects.filter(apellido_nombre__icontains=nombre_empleado).order_by('apellido_nombre')
+        empleados=Empleado.objects.filter(apellido_nombre__icontains=nombre_empleado).order_by('apellido_nombre')
         return render(request,"gestionEmpleados/resultados_busqueda_empleado.html",{"empleados":empleados,"query":nombre_empleado,"fecha":fecha_actual,"agno":anio})
     else:
         mensaje= "No has introducido ningún dato."

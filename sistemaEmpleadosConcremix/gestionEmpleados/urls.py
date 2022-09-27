@@ -1,4 +1,5 @@
-from django.contrib import admin
+from django.conf import settings
+from django.conf.urls.static import static
 from django.urls import path
 from . import views
 
@@ -11,3 +12,4 @@ urlpatterns=[
     path('editar/<int:id>/',views.editar_empleado,name="Editar empleado"),
     path('alta_baja/<int:id>/',views.alta_baja,name="Alta_baja"),
 ]
+urlpatterns+=static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
