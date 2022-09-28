@@ -11,7 +11,8 @@
             <a class="nav-item nav-link {% if 'clientes' in request.path %}active{% endif %}" href="#">Clientes</a>  <!-- href=" url 'Clientes' %}"-->
             <a class="nav-item nav-link {% if 'proveedores' in request.path %}active{% endif %}" href="#">Proveedores</a>  <!-- href=" url 'Proveedores' %}"-->
             <a class="nav-item nav-link {% if 'empleados' in request.path %}active{% endif %}" href="{% url 'Empleados' %}">Empleados</a>
-            <a class="nav-item nav-link" href="#">Otra...</a>
+            <a class="nav-item nav-link {% if 'vehiculos' in request.path %}active{% endif %}" href="{% url 'Vehiculos' %}">Vehiculos</a>
+            <a class="nav-item nav-link {% if 'sectores' in request.path %}active{% endif %}" href="{% url 'Sectores' %}">Sectores</a>
         </div>
     </div>
     <div class="navbar-nav">

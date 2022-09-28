@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from gestionEmpleados.models import Empleado, Vehiculo, Recinto
 from gestionEmpleados.forms import FormuCrearEmpleado, FormuCrearVehiculo
+from django.contrib import messages
 import datetime
 
 
@@ -105,5 +106,34 @@ def crear_vehiculo(request):
     else:
         return render(request, "gestionEmpleados/crear_vehiculo.html", {"fecha":fecha_actual,"agno":anio,"form_vehiculo":form_vehiculo}) # me sirve el form para crear/ingresar empleado
         
+def editar_vehiculo(request,id):
+    vehiculo = Vehiculo.objects.filter(id=id)
+    form_vehiculo = FormuCrearVehiculo(instance=vehiculo.first())
+    if request.method == 'POST':
+        form_vehiculo = FormuCrearVehiculo(request.POST)
+        print(form_vehiculo)
+        if form_vehiculo.is_valid():
+            vehiculo.update(**form_vehiculo.cleaned_data)
+            messages.success(request,"Vehículo actualizado correctamente")
+        else:
+            print(form_vehiculo.errors)
+            messages.error(request,"Algún dato del formulario es incorrecto")
+        return redirect('Vehiculos')
+    else:
+        fecha_actual=datetime.datetime.now().strftime("%D - %H:%M:%S")
+        anio=datetime.datetime.now().strftime("%Y")
+        return render(request, "gestionEmpleados/editar_vehiculo.html", {"form_vehiculo":form_vehiculo,"vehiculo":vehiculo,"fecha":fecha_actual,"agno":anio})
+
+def eliminar_vehiculo(request,id):
+    id_vehiculo = id
+    vehiculo = Vehiculo.objects.get(id=id_vehiculo)
+    vehiculo.delete()
+    messages.warning(request,"Vehículo eliminado")
+    return redirect('Vehiculos')
 
 # RECINTOS
+def planilla_recintos(request):
+    fecha_actual=datetime.datetime.now().strftime("%D - %H:%M:%S")
+    anio=datetime.datetime.now().strftime("%Y")
+    recintos = Recinto.objects.all().order_by('nombre_recinto')
+    return render(request,"gestionEmpleados/planilla_recintos.html", {"fecha":fecha_actual,"agno":anio,"recintos":recintos})

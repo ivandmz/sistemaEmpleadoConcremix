@@ -14,7 +14,9 @@ urlpatterns=[
     path('vehiculos/busqueda/',views.busqueda_vehiculos,name="Busqueda vehiculos"),
     path('vehiculos/crear/',views.crear_vehiculo,name="Nuevo vehiculo"),
     path('vehiculos/editar/<int:id>/',views.editar_vehiculo,name="Editar vehiculo"),
-    path('destruir/<int:id>/',views.destruir,name="Destruir"),
+    path('vehiculos/destruir/<int:id>/',views.eliminar_vehiculo,name="Destruir"),
+    path('sectores/',views.planilla_recintos, name="Sectores"),
+
 
 
 

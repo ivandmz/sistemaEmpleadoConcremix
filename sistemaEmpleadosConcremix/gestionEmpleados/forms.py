@@ -1,4 +1,5 @@
 from django import forms
+from gestionEmpleados.models import Vehiculo,Recinto
 
 class FormuCrearEmpleado(forms.Form):
     apellido_nombre=forms.CharField()
@@ -15,8 +16,11 @@ class FormuCrearEmpleado(forms.Form):
     recinto=forms.CharField(required=False)
     activo=forms.BooleanField(required=False)
 
-class FormuCrearVehiculo(forms.Form):
+class FormuCrearVehiculo(forms.ModelForm):
     nombre_vehiculo=forms.CharField(max_length=100)
     marca=forms.CharField(max_length=100)
     modelo=forms.IntegerField()
     interno=forms.IntegerField()
+    class Meta:
+        model = Vehiculo
+        fields = '__all__'

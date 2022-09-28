@@ -1,0 +1,17 @@
+{% extends 'gestionEmpleados/vehiculos.html' %}
+{% block title %} Editar vehiculo {% endblock %}
+{% block content %}
+<div class="card">
+    <div class="card-body table-dark">
+        <form class="table table-dark" action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <table>
+                {{form_vehiculo.as_table}}
+            </table>
+            <input class="btn btn-warning" type="submit" value="Confirmar cambios">
+            <a id="btnCancel" class="btn btn-warning" href="{% url 'Vehiculos' %}">Cancelar</a>
+        </form>
+        
+    </div>
+</div>
+{% endblock %}
