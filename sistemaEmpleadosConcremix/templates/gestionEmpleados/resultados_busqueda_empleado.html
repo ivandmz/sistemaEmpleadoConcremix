@@ -51,11 +51,11 @@
                 <td>{{empleado.vehiculo}}</td>
                 <td>{{empleado.recinto}}</td>
                 <td>
-                    <a class="btn btn-warning" href="editar/{{empleado.id}}">Editar</a>
+                    <a class="btn btn-warning" href="{% url 'Editar empleado' empleado.id %}">Editar</a>
                     {% if empleado.activo %}
-                    <a id="btnBorrar" class="btn btn-danger" href="alta_baja/{{empleado.id}}">Dar de baja</a>
+                    <a id="btnBorrar" class="btn btn-danger" href="{% url 'Alta_baja' empleado.id %}">Dar de baja</a>
                     {% elif not empleado.activo %}
-                    <a id="btnBorrar" class="btn btn-danger" href="alta_baja/{{empleado.id}}">Dar de alta</a>
+                    <a id="btnBorrar" class="btn btn-danger" href="{% url 'Alta_baja' empleado.id %}">Dar de alta</a>
                     {% endif %}
                 </td>
             </tr>
