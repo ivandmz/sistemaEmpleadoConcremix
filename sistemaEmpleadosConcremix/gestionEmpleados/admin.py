@@ -1,5 +1,5 @@
 from django.contrib import admin
-from gestionEmpleados.models import Empleado,Vehiculo,Recinto
+from gestionEmpleados.models import Empleado,Vehiculo,Sector
 
 class EmpleadoAdmin(admin.ModelAdmin):
     if Empleado.activo == False:
@@ -14,10 +14,10 @@ class VehiculoAdmin(admin.ModelAdmin):
     search_fields = ("interno","modelo",)
     list_filter = ("modelo","marca",)
 
-class RecintoAdmin(admin.ModelAdmin):
-    list_display = ("nombre_recinto",) # si tiene un solo item debe agregar la coma al final para q lo considere tupla
-    search_fields = ("nombre_recinto",)
+class SectorAdmin(admin.ModelAdmin):
+    list_display = ("nombre_sector",) # si tiene un solo item debe agregar la coma al final para q lo considere tupla
+    search_fields = ("nombre_sector",)
 
 admin.site.register(Empleado,EmpleadoAdmin)
 admin.site.register(Vehiculo,VehiculoAdmin)
-admin.site.register(Recinto,RecintoAdmin)
+admin.site.register(Sector,SectorAdmin)

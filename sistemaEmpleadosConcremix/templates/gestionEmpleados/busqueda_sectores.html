@@ -1,0 +1,10 @@
+{% extends 'gestionEmpleados/sectores.html' %}
+{% block title %} Buscar sector {% endblock %}
+{% block content %}
+    <form class="table table-dark" action="" method="POST">
+        {% csrf_token %}
+        <label for="sector">Ingrese sector: </label>
+        <input type="text" name="sector" id="sector">
+        <input class="btn btn-warning" type="submit" value="Buscar">
+    </form>
+{% endblock  %}

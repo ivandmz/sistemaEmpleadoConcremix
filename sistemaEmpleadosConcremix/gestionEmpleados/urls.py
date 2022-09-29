@@ -14,10 +14,11 @@ urlpatterns=[
     path('vehiculos/crear/',views.crear_vehiculo,name="Nuevo vehiculo"),
     path('vehiculos/editar/<int:id>/',views.editar_vehiculo,name="Editar vehiculo"),
     path('vehiculos/destruir/<int:id>/',views.eliminar_vehiculo,name="Destruir"),
-    path('sectores/',views.planilla_recintos, name="Sectores"),
-
-
-
+    path('sectores/',views.planilla_sectores, name="Sectores"),
+    path('sectores/busqueda/',views.busqueda_sectores,name="Busqueda sectores"),
+    path('sectores/crear/',views.crear_sector,name="Crear sector"),
+    path('sectores/editar/<int:id>/',views.editar_sector,name="Editar sector"),
+    path('sectores/destruir/<int:id>/',views.eliminar_sector,name="Destruir sector"),
 
 ]
 urlpatterns+=static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

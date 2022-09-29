@@ -29,9 +29,9 @@ class Vehiculo(models.Model):
         verbose_name='vehiculo'
         verbose_name_plural='vehiculos'
 
-class Recinto(models.Model):
-    nombre_recinto=models.CharField(max_length=100,verbose_name="Sector")
+class Sector(models.Model):
+    nombre_sector=models.CharField(max_length=100,verbose_name="Sector")
     class Meta:
-        verbose_name='recinto'
-        verbose_name_plural='recintos'
+        verbose_name='sector'
+        verbose_name_plural='sectores'
     

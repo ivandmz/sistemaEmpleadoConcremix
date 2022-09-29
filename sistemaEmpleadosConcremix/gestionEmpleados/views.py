@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
-from gestionEmpleados.models import Empleado, Vehiculo, Recinto
-from gestionEmpleados.forms import FormuCrearEmpleado, FormuCrearVehiculo
+from gestionEmpleados.models import Empleado, Vehiculo, Sector
+from gestionEmpleados.forms import FormuCrearEmpleado, FormuCrearVehiculo, FormuCrearSector
 from django.contrib import messages
 import datetime
 
@@ -13,30 +13,13 @@ def crear_empleado(request):
     if request.method == 'POST':
         form_empleado = FormuCrearEmpleado(request.POST,request.FILES)
         if form_empleado.is_valid():
-            empleado = Empleado.objects.create(**form_empleado.cleaned_data)
+            Empleado.objects.create(**form_empleado.cleaned_data)
             messages.success(request,"Empleado cargado satisfactoriamente.")
         else:
             messages.error(request,"Datos del formulario inválidos")
         return redirect('Empleados')
     else:
         return render(request, "gestionEmpleados/crear_empleado.html", {"fecha":fecha_actual,"agno":anio}) # GET. me sirve el form para crear/ingresar empleado
-
-def crear_vehiculo(request):
-    fecha_actual=datetime.datetime.now().strftime("%D - %H:%M:%S")
-    anio=datetime.datetime.now().strftime("%Y")
-    form_vehiculo = FormuCrearVehiculo()
-    if request.method == 'POST':
-        form_vehiculo = FormuCrearVehiculo(request.POST) # como hago para no repetir esto?
-        if form_vehiculo.is_valid():
-            vehiculo = Vehiculo.objects.create(**form_vehiculo.cleaned_data) # hace falta la variable realmente???
-            messages.success(request,"Vehículo cargado correctamente")
-        else:
-            messages.error(request,"Datos de formulario incorrectos")
-        return redirect('Vehiculos')
-    else:
-        return render(request, "gestionEmpleados/crear_vehiculo.html", {"fecha":fecha_actual,"agno":anio,"form_vehiculo":form_vehiculo}) # me sirve el form para crear/ingresar empleado
-    
-
 
 def editar_empleado(request,id):
     id_empleado= id
@@ -120,15 +103,16 @@ def crear_vehiculo(request):
     if request.method == 'POST':
         form_vehiculo = FormuCrearVehiculo(request.POST) # como hago para no repetir esto?
         if form_vehiculo.is_valid():
-            vehiculo = Vehiculo.objects.create(**form_vehiculo.cleaned_data) # hace falta la variable realmente???
+            Vehiculo.objects.create(**form_vehiculo.cleaned_data) # hace falta la variable realmente???
             messages.success(request,"Vehículo cargado correctamente")
         else:
             messages.error(request,"Datos de formulario incorrectos")
         return redirect('Vehiculos')
     else:
-        return render(request, "gestionEmpleados/crear_vehiculo.html", {"fecha":fecha_actual,"agno":anio,"form_vehiculo":form_vehiculo}) # me sirve el form para crear/ingresar empleado
+        return render(request, "gestionEmpleados/crear_vehiculo.html", {"fecha":fecha_actual,"agno":anio,"form_vehiculo":form_vehiculo}) # me sirve el form para crear/ingresar un vehiculo
         
 def editar_vehiculo(request,id):
+    """ Función que edita un vehículo buscandolo de la BD con su número id"""
     vehiculo = Vehiculo.objects.filter(id=id)
     form_vehiculo = FormuCrearVehiculo(instance=vehiculo.first())
     if request.method == 'POST':
@@ -153,8 +137,64 @@ def eliminar_vehiculo(request,id):
     return redirect('Vehiculos')
 
 # RECINTOS
-def planilla_recintos(request):
+def planilla_sectores(request):
     fecha_actual=datetime.datetime.now().strftime("%D - %H:%M:%S")
     anio=datetime.datetime.now().strftime("%Y")
-    recintos = Recinto.objects.all().order_by('nombre_recinto')
-    return render(request,"gestionEmpleados/planilla_recintos.html", {"fecha":fecha_actual,"agno":anio,"recintos":recintos})
+    sectores = Sector.objects.all().order_by('nombre_sector')
+    return render(request,"gestionEmpleados/planilla_sectores.html", {"fecha":fecha_actual,"agno":anio,"sectores":sectores})
+
+def busqueda_sectores(request):
+    fecha_actual=datetime.datetime.now().strftime("%D - %H:%M:%S")
+    anio=datetime.datetime.now().strftime("%Y")
+    if request.method == 'POST':
+        if request.POST["sector"]:
+            nombre_sector= request.POST["sector"]
+            sectores=Sector.objects.filter(nombre_sector__icontains=nombre_sector).order_by('nombre_sector')
+            messages.info(request,"Búsqueda realizada")
+            return render(request,"gestionEmpleados/resultados_busqueda_sector.html",{"sectores":sectores,"query":nombre_sector,"fecha":fecha_actual,"agno":anio})
+        else:
+            messages.warning(request,"No has introducido ningún dato")
+            return redirect('Sectores')
+            
+    else:
+        return render(request, "gestionEmpleados/busqueda_sectores.html", {"fecha":fecha_actual,"agno":anio})
+
+def crear_sector(request):
+    fecha_actual=datetime.datetime.now().strftime("%D - %H:%M:%S")
+    anio=datetime.datetime.now().strftime("%Y")
+    form_sector = FormuCrearSector()
+    if request.method == 'POST':
+        form_sector = FormuCrearSector(request.POST) # como hago para no repetir esto?
+        if form_sector.is_valid():
+            Sector.objects.create(**form_sector.cleaned_data) # hace falta la variable realmente???
+            messages.success(request,"Sector creado satisfactoriamente")
+        else:
+            messages.error(request,"Datos de formulario incorrectos")
+        return redirect('Sectores')
+    else:
+        return render(request, "gestionEmpleados/crear_sector.html", {"fecha":fecha_actual,"agno":anio,"form_sector":form_sector}) # me sirve el form para crear/ingresar sector
+        
+def editar_sector(request,id):
+    """ Función que edita un sector buscandolo de la BD con su número id"""
+    sector = Sector.objects.filter(id=id)
+    form_sector = FormuCrearSector(instance=sector.first())
+    if request.method == 'POST':
+        form_sector = FormuCrearSector(request.POST)
+        print(form_sector) # en produccion se va...
+        if form_sector.is_valid():
+            sector.update(**form_sector.cleaned_data)
+            messages.success(request,"Sector actualizado correctamente")
+        else:
+            print(form_sector.errors) # en produccion esto se va
+            messages.error(request,"Algún dato del formulario es incorrecto")
+        return redirect('Sectores')
+    else:
+        fecha_actual=datetime.datetime.now().strftime("%D - %H:%M:%S")
+        anio=datetime.datetime.now().strftime("%Y")
+        return render(request, "gestionEmpleados/editar_sector.html", {"form_sector":form_sector,"sector":sector,"fecha":fecha_actual,"agno":anio})
+
+def eliminar_sector(request,id):
+    sector = Sector.objects.get(id=id)
+    sector.delete()
+    messages.warning(request,"Sector eliminado")
+    return redirect('Sectores')

@@ -1,0 +1,22 @@
+{% extends 'gestionEmpleados/sectores.html' %}
+{% block content %}
+<table class="table table-dark">
+    <thead class="thead-dark">
+        <tr>
+            <th>Sector</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for sector in sectores %}
+        <tr>
+            <td>{{sector.nombre_sector}}</td>
+            <td>
+                <a class="btn btn-warning" href="{% url 'Editar sector' sector.id %}">Editar sector</a>
+                <a id="btnBorrar" class="btn btn-danger" href="{% url 'Destruir sector' sector.id %}">Eliminar sector</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
