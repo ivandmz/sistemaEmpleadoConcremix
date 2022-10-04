@@ -19,7 +19,7 @@
             <td>{{vehiculo.interno}}</td>
             <td>
                 <a class="btn btn-warning" href="editar/{{vehiculo.id}}">Editar vehiculo</a>
-                <a id="btnBorrar" class="btn btn-danger" href="destruir/{{vehiculo.id}}">Eliminar vehiculo</a>
+                <a id="btnBorrar" class="btn btn-danger" onclick="return confirm('Desea borrar al vehículo?')" href="destruir/{{vehiculo.id}}">Eliminar vehiculo</a>
             </td>
         </tr>
         {% endfor %}
