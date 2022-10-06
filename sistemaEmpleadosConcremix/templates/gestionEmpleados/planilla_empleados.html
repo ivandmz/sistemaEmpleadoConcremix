@@ -28,7 +28,7 @@
             <td style="color: red;">&bullet;</td>
             {% endif %}
 
-            <td><img width="100" src="{% if empleado.foto %}{{empleado.foto.url}}{% endif %}" alt="foto perfil {{empleado.apellido_nombre}}"></td>
+            <td><img width="100" src="{% if empleado.foto %}media/{{empleado.foto}}{% endif %}" alt="foto perfil {{empleado.apellido_nombre}}"></td>
             <td>{{empleado.apellido_nombre}}</td>
             <td>{{empleado.fecha_nac|date:'Y-m-d'}}</td>
             <td>{{empleado.dni}}</td>
