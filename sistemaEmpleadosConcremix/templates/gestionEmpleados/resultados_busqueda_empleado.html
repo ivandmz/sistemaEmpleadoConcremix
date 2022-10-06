@@ -48,8 +48,8 @@
                 <td>{{empleado.fecha_ingreso|date:'Y-m-d'}}</td>
                 <td>{{empleado.fecha_baja|date:'Y-m-d'}}</td>
                 <td>{{empleado.puesto}}</td>
-                <td>{{empleado.vehiculo}}</td>
-                <td>{{empleado.recinto}}</td>
+                <td>{{empleado.vehiculo.nombre_vehiculo}}</td>
+                <td>{{empleado.sector.nombre_sector}}</td>
                 <td>
                     <a class="btn btn-warning" href="{% url 'Editar empleado' empleado.id %}">Editar</a>
                     {% if empleado.activo %}

@@ -12,8 +12,8 @@ class FormuCrearEmpleado(forms.Form):
     fecha_ingreso=forms.DateField()
     fecha_baja=forms.DateField(required=False)
     puesto=forms.CharField()
-    vehiculo=forms.CharField(required=False)
-    recinto=forms.CharField(required=False)
+    vehiculo=forms.IntegerField(required=False)
+    sector=forms.IntegerField(required=False)
     activo=forms.BooleanField(required=False)
 
 class FormuCrearVehiculo(forms.ModelForm):

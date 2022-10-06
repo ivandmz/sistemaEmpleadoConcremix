@@ -3,11 +3,11 @@ from gestionEmpleados.models import Empleado,Vehiculo,Sector
 
 class EmpleadoAdmin(admin.ModelAdmin):
     if Empleado.activo == False:
-        list_display = ("apellido_nombre","foto","fecha_nac","dni","telefono","correo","direccion","fecha_ingreso","puesto","vehiculo","recinto","activo","fecha_baja",)
+        list_display = ("apellido_nombre","foto","fecha_nac","dni","telefono","correo","direccion","fecha_ingreso","puesto","vehiculo","sector","activo","fecha_baja",)
     else:
-        list_display = ("apellido_nombre","foto","fecha_nac","dni","telefono","correo","direccion","fecha_ingreso","puesto","vehiculo","recinto","activo",)
-    search_fields = ("apellido_nombre","dni","puesto","vehiculo","recinto",)
-    list_filter = ("puesto","vehiculo","recinto",)
+        list_display = ("apellido_nombre","foto","fecha_nac","dni","telefono","correo","direccion","fecha_ingreso","puesto","vehiculo","sector","activo",)
+    search_fields = ("apellido_nombre","dni","puesto","vehiculo","sector",)
+    list_filter = ("puesto","vehiculo","sector",)
 
 class VehiculoAdmin(admin.ModelAdmin):
     list_display = ("nombre_vehiculo","marca","modelo","interno",)
