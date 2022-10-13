@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from gestionEmpleados.models import Empleado, Vehiculo, Sector
-from gestionEmpleados.forms import FormuCrearEmpleado, FormuCrearVehiculo, FormuCrearSector
+from gestionEmpleados.forms import FormuCrearEmpleado, FormuEditarEmpleado, FormuCrearVehiculo, FormuCrearSector
 from django.contrib import messages
 import datetime
 
@@ -22,10 +22,11 @@ def crear_empleado(request):
         return render(request, "gestionEmpleados/crear_empleado.html", {"fecha":fecha_actual,"agno":anio}) # GET. me sirve el form para crear/ingresar empleado
 
 def editar_empleado(request,id):
-    id_empleado= id
-    empleado = Empleado.objects.filter(id=id_empleado)
+    """ Función que edita un empleado buscandolo en BD con su número id"""
+    empleado = Empleado.objects.filter(id=id)
+    form_empleado = FormuEditarEmpleado(instance=empleado.first())
     if request.method == 'POST':
-        form_empleado = FormuCrearEmpleado(request.POST,request.FILES)
+        form_empleado = FormuEditarEmpleado(request.POST,request.FILES)
         if form_empleado.is_valid():
             empleado.update(**form_empleado.cleaned_data)
             messages.success(request,"Empleado actualizado satisfactoriamente")
@@ -36,7 +37,7 @@ def editar_empleado(request,id):
     else:
         fecha_actual=datetime.datetime.now().strftime("%D - %H:%M:%S")
         anio=datetime.datetime.now().strftime("%Y")
-        return render(request, "gestionEmpleados/editar_empleado.html", {"empleado":empleado,"fecha":fecha_actual,"agno":anio})
+        return render(request, "gestionEmpleados/editar_empleado.html", {"form_empleado":form_empleado,"fecha":fecha_actual,"agno":anio})
 
 def alta_baja(request,id):
     id_empleado = id
@@ -128,7 +129,7 @@ def editar_vehiculo(request,id):
     else:
         fecha_actual=datetime.datetime.now().strftime("%D - %H:%M:%S")
         anio=datetime.datetime.now().strftime("%Y")
-        return render(request, "gestionEmpleados/editar_vehiculo.html", {"form_vehiculo":form_vehiculo,"vehiculo":vehiculo,"fecha":fecha_actual,"agno":anio})
+        return render(request, "gestionEmpleados/editar_vehiculo.html", {"form_vehiculo":form_vehiculo,"fecha":fecha_actual,"agno":anio})
 
 def eliminar_vehiculo(request,id):
     vehiculo = Vehiculo.objects.get(id=id)
@@ -136,7 +137,7 @@ def eliminar_vehiculo(request,id):
     messages.warning(request,"Vehículo eliminado")
     return redirect('Vehiculos')
 
-# RECINTOS
+# SECTORES
 def planilla_sectores(request):
     fecha_actual=datetime.datetime.now().strftime("%D - %H:%M:%S")
     anio=datetime.datetime.now().strftime("%Y")
@@ -191,7 +192,7 @@ def editar_sector(request,id):
     else:
         fecha_actual=datetime.datetime.now().strftime("%D - %H:%M:%S")
         anio=datetime.datetime.now().strftime("%Y")
-        return render(request, "gestionEmpleados/editar_sector.html", {"form_sector":form_sector,"sector":sector,"fecha":fecha_actual,"agno":anio})
+        return render(request, "gestionEmpleados/editar_sector.html", {"form_sector":form_sector,"fecha":fecha_actual,"agno":anio})
 
 def eliminar_sector(request,id):
     sector = Sector.objects.get(id=id)

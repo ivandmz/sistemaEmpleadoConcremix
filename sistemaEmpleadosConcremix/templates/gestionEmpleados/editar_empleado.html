@@ -1,54 +1,16 @@
 {% extends 'gestionEmpleados/empleados.html' %}
 {% block title %} Editar empleado {% endblock %}
 {% block content %}
-{% for empleado in empleado %}
 <div class="card">
     <div class="card-body table-dark">
         <form class="table table-dark" action="" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
-
-            <label for="apellido_nombre">Nombre completo: </label>
-            <input type="text" name="apellido_nombre" id="apellido_nombre" value="{{empleado.apellido_nombre}}">
-            <br>
-            <label for="foto">foto: </label>
-            <input type="file" name="foto" id="foto" value="{{empleado.foto}}">
-            <br>
-            <label for="fecha_nac">Fecha nacimiento: </label>
-            <input type="datetime" name="fecha_nac" id="fecha_nac" value="{{empleado.fecha_nac|date:'Y-m-d'}}">
-            <br>
-            <label for="dni">DNI: </label>
-            <input type="text" name="dni" id="dni" value="{{empleado.dni}}">
-            <br>
-            <label for="telefono">Telefono: </label>
-            <input type="text" name="telefono" id="telefono" value="{{empleado.telefono}}">
-            <br>
-            <label for="correo">email: </label>
-            <input type="email" name="correo" id="correo" value="{{empleado.correo}}">
-            <br>
-            <label for="direccion">Dirección: </label>
-            <input type="text" name="direccion" id="direccion" value="{{empleado.direccion}}">
-            <br>
-            <label for="fecha_ingreso">Fecha ingreso: </label>
-            <input type="datetime" name="fecha_ingreso" id="fecha_ingreso" value="{{empleado.fecha_ingreso|date:'Y-m-d'}}">
-            <br>
-            <label for="fecha_baja">Fecha baja: </label>
-            <input type="datetime" name="fecha_baja" id="fecha_baja" value="{{empleado.fecha_baja|date:'Y-m-d'}}">
-            <br>
-            <label for="puesto">Puesto: </label>
-            <input type="text" name="puesto" id="puesto" value="{{empleado.puesto}}">
-            <br>
-            <label for="vehiculo">Vehículo: </label>
-            <input type="number" name="vehiculo" id="vehiculo" value="{{empleado.vehiculo.id}}">
-            <br>
-            <label for="sector">Sector: </label>
-            <input type="number" name="sector" id="recinto" value="{{empleado.sector.id}}">
-            <br>
-            <input type="hidden" name="activo" value="{{empleado.activo}}">
-
+            <table>
+                {{form_empleado.as_table}}
+            </table>
             <input class="btn btn-warning" type="submit" value="Confirmar cambios">
             <a id="btnCancel" class="btn btn-warning" href="{% url 'Empleados' %}">Cancelar</a>
         </form>
     </div>
 </div>
-{% endfor %}
 {% endblock %}
