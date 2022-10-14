@@ -3,7 +3,8 @@ from django.http import HttpResponse
 from gestionEmpleados.models import Empleado, Vehiculo, Sector
 from gestionEmpleados.forms import FormuCrearEmpleado, FormuEditarEmpleado, FormuCrearVehiculo, FormuCrearSector
 from django.contrib import messages
-import datetime
+import datetime, os
+from sistemaEmpleadosConcremix import settings
 
 
 # EMPLEADOS
@@ -23,12 +24,15 @@ def crear_empleado(request):
 
 def editar_empleado(request,id):
     """ Función que edita un empleado buscandolo en BD con su número id"""
-    empleado = Empleado.objects.filter(id=id)
-    form_empleado = FormuEditarEmpleado(instance=empleado.first())
+    empleado = Empleado.objects.get(pk=id)
+    form_empleado = FormuEditarEmpleado(instance=empleado)
     if request.method == 'POST':
-        form_empleado = FormuEditarEmpleado(request.POST,request.FILES)
+        if request.FILES and empleado.foto:
+            os.remove(os.path.join(settings.MEDIA_ROOT + '/' + str(empleado.foto)))
+        form_empleado = FormuEditarEmpleado(request.POST,request.FILES, instance=empleado)
         if form_empleado.is_valid():
-            empleado.update(**form_empleado.cleaned_data)
+            form_empleado.save()
+            # empleado.update(**form_empleado.cleaned_data)
             messages.success(request,"Empleado actualizado satisfactoriamente")
         else:
             print(form_empleado.errors) # esto en produccion se va...
