@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from gestionEmpleados.models import Empleado, Vehiculo, Sector
-from gestionEmpleados.forms import FormuCrearEmpleado, FormuEditarEmpleado, FormuCrearVehiculo, FormuCrearSector
+from gestionEmpleados.forms import FormuEmpleado, FormuCrearVehiculo, FormuCrearSector
 from django.contrib import messages
 import datetime, os
 from sistemaEmpleadosConcremix import settings
@@ -11,28 +11,30 @@ from sistemaEmpleadosConcremix import settings
 def crear_empleado(request):
     fecha_actual=datetime.datetime.now().strftime("%D - %H:%M:%S")
     anio=datetime.datetime.now().strftime("%Y")
+    form_empleado = FormuEmpleado()
+
     if request.method == 'POST':
-        form_empleado = FormuCrearEmpleado(request.POST,request.FILES)
+        form_empleado = FormuEmpleado(request.POST,request.FILES)
         if form_empleado.is_valid():
-            Empleado.objects.create(**form_empleado.cleaned_data)
+            form_empleado.save()
+            # Empleado.objects.create(**form_empleado.cleaned_data) # otro método que funciona igual
             messages.success(request,"Empleado cargado satisfactoriamente.")
         else:
             messages.error(request,"Datos del formulario inválidos")
         return redirect('Empleados')
     else:
-        return render(request, "gestionEmpleados/crear_empleado.html", {"fecha":fecha_actual,"agno":anio}) # GET. me sirve el form para crear/ingresar empleado
+        return render(request, "gestionEmpleados/crear_empleado.html", {"fecha":fecha_actual,"agno":anio,'form_empleado':form_empleado}) # GET. me sirve el form para crear/ingresar empleado
 
 def editar_empleado(request,id):
     """ Función que edita un empleado buscandolo en BD con su número id"""
     empleado = Empleado.objects.get(pk=id)
-    form_empleado = FormuEditarEmpleado(instance=empleado)
+    form_empleado = FormuEmpleado(instance=empleado)
     if request.method == 'POST':
         if request.FILES and empleado.foto:
             os.remove(os.path.join(settings.MEDIA_ROOT + '/' + str(empleado.foto)))
-        form_empleado = FormuEditarEmpleado(request.POST,request.FILES, instance=empleado)
+        form_empleado = FormuEmpleado(request.POST,request.FILES, instance=empleado)
         if form_empleado.is_valid():
             form_empleado.save()
-            # empleado.update(**form_empleado.cleaned_data)
             messages.success(request,"Empleado actualizado satisfactoriamente")
         else:
             print(form_empleado.errors) # esto en produccion se va...
@@ -74,7 +76,7 @@ def busqueda_empleados(request):
             return render(request,"gestionEmpleados/resultados_busqueda_empleado.html",{"empleados":empleados,"query":nombre_empleado,"fecha":fecha_actual,"agno":anio})
         else:
             messages.warning(request,"No has introducido ningún dato")
-            return redirect('Empleados')
+            return redirect('Busqueda empleados')
     return render(request, "gestionEmpleados/busqueda_empleados.html", {"fecha":fecha_actual,"agno":anio})
 
 
@@ -96,7 +98,7 @@ def busqueda_vehiculos(request):
             return render(request,"gestionEmpleados/resultados_busqueda_vehiculo.html",{"vehiculos":vehiculos,"query":nombre_vehiculo,"fecha":fecha_actual,"agno":anio})
         else:
             messages.warning(request,"No has introducido ningún dato")
-            return redirect('Vehiculos')
+            return redirect('Busqueda vehiculos')
             
     else:
         return render(request, "gestionEmpleados/busqueda_vehiculos.html", {"fecha":fecha_actual,"agno":anio})
@@ -159,7 +161,7 @@ def busqueda_sectores(request):
             return render(request,"gestionEmpleados/resultados_busqueda_sector.html",{"sectores":sectores,"query":nombre_sector,"fecha":fecha_actual,"agno":anio})
         else:
             messages.warning(request,"No has introducido ningún dato")
-            return redirect('Sectores')
+            return redirect('Busqueda sectores')
             
     else:
         return render(request, "gestionEmpleados/busqueda_sectores.html", {"fecha":fecha_actual,"agno":anio})

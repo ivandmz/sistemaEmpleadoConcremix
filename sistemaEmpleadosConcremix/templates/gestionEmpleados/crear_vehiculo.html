@@ -3,12 +3,13 @@
 {% block content %}
 <div class="card">
     <div class="card-body table-dark">
-        <form class="table table-dark" action="" method="POST" enctype="multipart/form-data">
+        <form class="table table-dark" action="{% url 'Nuevo vehiculo' %}" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             <table>
                 {{form_vehiculo.as_table}}
             </table>
             <input class="btn btn-warning" type="submit" value="Ingresar vehiculo">
+            <a id="btnCancel" class="btn btn-warning" href="{% url 'Vehiculos' %}">Cancelar</a>
         </form>
     </div>
 </div>

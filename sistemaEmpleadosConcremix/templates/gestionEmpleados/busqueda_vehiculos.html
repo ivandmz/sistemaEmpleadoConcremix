@@ -1,7 +1,7 @@
 {% extends 'gestionEmpleados/vehiculos.html' %}
 {% block title %} Buscar vehiculo {% endblock %}
 {% block content %}
-    <form class="table table-dark" action="" method="POST">
+    <form class="table table-dark" action="{% url 'Busqueda vehiculos' %}" method="POST">
         {% csrf_token %}
         <label for="vehi">Ingrese nombre vehiculo: </label>
         <input type="text" name="vehi" id="vehi">

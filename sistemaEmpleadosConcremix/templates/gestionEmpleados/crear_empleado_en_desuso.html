@@ -1,0 +1,52 @@
+{% extends 'gestionEmpleados/empleados.html' %}
+{% block title %} Crear empleado {% endblock %}
+{% block content %}
+<div class="card">
+    <div class="card-body table-dark">
+        <form class="table table-dark" action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="hidden" name="id">
+
+            <label for="apellido_nombre">Nombre completo: </label>
+            <input type="text" name="apellido_nombre" id="apellido_nombre" placeholder="Apellido, Nombre">
+            <br>
+            <label for="foto">foto: </label>
+            <input type="file" name="foto" id="foto">
+            <br>
+            <label for="fecha_nac">Fecha nacimiento: </label>
+            <input type="date" name="fecha_nac" id="fecha_nac" placeholder="aaaa-mm-dd">
+            <br>
+            <label for="dni">DNI: </label>
+            <input type="text" name="dni" id="dni" placeholder="DNI sin puntos ni comas">
+            <br>
+            <label for="telefono">Telefono: </label>
+            <input type="text" name="telefono" id="telefono">
+            <br>
+            <label for="correo">email: </label>
+            <input type="email" name="correo" id="correo">
+            <br>
+            <label for="direccion">Dirección: </label>
+            <input type="text" name="direccion" id="direccion">
+            <br>
+            <label for="fecha_ingreso">Fecha ingreso: </label>
+            <input type="date" name="fecha_ingreso" id="fecha_ingreso">
+            <br>
+            <label for="fecha_baja">Fecha baja: </label>
+            <input type="date" name="fecha_baja" id="fecha_baja">
+            <br>
+            <label for="puesto">Puesto: </label>
+            <input type="text" name="puesto" id="puesto">
+            <br>
+            <label for="vehiculo">Vehículo: </label>
+            <input type="number" name="vehiculo" id="vehiculo">
+            <br>
+            <label for="sector">Sector: </label>
+            <input type="number" name="sector" id="sector">
+            <br>
+            <input type="hidden" name="activo" value="True">
+
+            <input class="btn btn-warning" type="submit" value="Ingresar empleado">
+        </form>
+    </div>
+</div>
+{% endblock %}

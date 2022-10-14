@@ -1,7 +1,7 @@
 {% extends 'gestionEmpleados/empleados.html' %}
 {% block title %} Buscar empleado {% endblock %}
 {% block content %}
-    <form class="table table-dark" action="" method="POST">
+    <form class="table table-dark" action="{% url 'Busqueda empleados' %}" method="POST">
         {% csrf_token %}
         <label for="emp">Ingrese nombre: </label>
         <input type="text" name="emp" id="emp">

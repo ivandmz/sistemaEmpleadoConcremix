@@ -8,12 +8,16 @@ class Vehiculo(models.Model):
     class Meta:
         verbose_name='vehiculo'
         verbose_name_plural='vehiculos'
+    def __str__(self) -> str:
+        return 'interno %s: %s'%(self.interno,self.nombre_vehiculo)
 
 class Sector(models.Model):
     nombre_sector=models.CharField(max_length=100,verbose_name="Sector")
     class Meta:
         verbose_name='sector'
         verbose_name_plural='sectores'
+    def __str__(self):
+        return '%s'%(self.nombre_sector)
 
 class Empleado(models.Model):
     apellido_nombre=models.CharField(max_length=255,verbose_name="Nombre completo")
